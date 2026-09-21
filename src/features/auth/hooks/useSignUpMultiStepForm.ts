@@ -31,12 +31,20 @@ function useSignUpMultiStepForm(steps) {
     }
   };
 
+  const goToStep = (id: string) => {
+    const index = steps.findIndex((step) => step.id === id);
+    if (index !== -1) {
+      setCurrentStep(index);
+    }
+  };
+
   return {
     currentStep,
     isFirstStep,
     isLastStep,
     goToNextStep,
     goToPreviousStep,
+    goToStep,
   };
 }
 

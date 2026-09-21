@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import type { SignUpFormData } from "../../validation/signup.schema";
 import PasswordRule from "../PasswordRule";
+import { signUp } from "../../api/authApi";
 
 interface PasswordStepProps {
   goToNextStep: () => void;
+  onSessionExpired: () => void;
 }
 
-function PasswordStep({ goToNextStep }: PasswordStepProps) {
+function PasswordStep({ goToNextStep: _, onSessionExpired }: PasswordStepProps) {
+  const navigate = useNavigate();
   const {
     register,
     trigger,
     formState: { errors },
+    handleSubmit,
+    setError,
   } = useFormContext<SignUpFormData>();
 
   const passwordField = register("password");
@@ -19,7 +25,7 @@ function PasswordStep({ goToNextStep }: PasswordStepProps) {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
   const password =
@@ -28,17 +34,45 @@ function PasswordStep({ goToNextStep }: PasswordStepProps) {
     }) ?? "";
 
   const hasMinLength = password.length >= 8;
-
   const hasSpecialCharacter = /[^a-zA-Z0-9]/.test(password);
-
   const hasNumber = /\d/.test(password);
 
-  const handleSignUp = async () => {
-    setHasAttemptedSubmit(true);
-    const isValid = await trigger(["password", "confirmPassword"]);
-    if (!isValid) return;
-    goToNextStep();
-  };
+  const handleSignUp = handleSubmit(
+    async (data) => {
+      setHasAttemptedSubmit(true);
+      setIsSubmitting(true);
+      try {
+        await signUp({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          username: data.username,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+        });
+        void navigate("/");
+      } catch (err: unknown) {
+        const data = (err as { response?: { data?: { error?: string; message?: string } } })
+          ?.response?.data;
+
+        if (
+          data?.error === "MISSING_COOKIE" ||
+          data?.error === "INVALID_VERIFICATION_TOKEN"
+        ) {
+          onSessionExpired();
+          return;
+        }
+
+        setError("root", {
+          message: data?.message ?? "Sign up failed. Please try again.",
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    () => {
+      setHasAttemptedSubmit(true);
+    },
+  );
 
   return (
     <div className="space-y-4">
@@ -125,10 +159,14 @@ function PasswordStep({ goToNextStep }: PasswordStepProps) {
 
       <button
         onClick={handleSignUp}
-        className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        disabled={isSubmitting}
+        className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        SignUp
+        {isSubmitting ? "Signing up..." : "SignUp"}
       </button>
+      {errors.root && (
+        <p className="text-sm text-red-500 mt-1">{errors.root.message}</p>
+      )}
     </div>
   );
 }
