@@ -12,7 +12,8 @@ export const SignUpSchema = z
       .max(255, "Email cannot exceed 255 characters"),
     verificationCode: z
       .string()
-      .length(6, "Verification code must be exactly 6 characters"),
+      .length(6, "Verification code must be exactly 6 digits")
+      .regex(/^\d{6}$/, "Verification code must be exactly 6 digits"),
     username: z
       .string()
       .min(3, "Username must be at least 3 characters")
