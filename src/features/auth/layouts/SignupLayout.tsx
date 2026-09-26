@@ -23,7 +23,7 @@ function SignUpLayout({
         <div className="w-full">{children}</div>
 
         <div className="w-full space-y-4">
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="flex-1 border-t border-black" />
             <p className="text-sm text-gray-500">or</p>
             <div className="flex-1 border-t border-black" />
@@ -31,10 +31,10 @@ function SignUpLayout({
 
           <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
             Continue with google
-          </button>
+          </button> */}
 
           <p className="text-center text-sm text-gray-600">
-            Already have an account?
+            Already have an account?{" "}
             <Link
               to="/login"
               className="font-medium text-blue-600 hover:text-blue-700"
