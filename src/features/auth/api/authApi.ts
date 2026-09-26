@@ -48,3 +48,20 @@ export const signUp = async (payload: SignUpPayload): Promise<SignUpResult> => {
   const response = await apiClient.post(`${AUTH_PREFIX}/signup`, payload);
   return response.data;
 };
+
+export interface LoginPayload {
+  credential: string;
+  password: string;
+}
+
+export interface LoginResult {
+  message: string;
+  username: string;
+  email: string;
+  avatar: string;
+}
+
+export const login = async (payload: LoginPayload): Promise<LoginResult> => {
+  const response = await apiClient.post(`${AUTH_PREFIX}/login`, payload);
+  return response.data;
+};
