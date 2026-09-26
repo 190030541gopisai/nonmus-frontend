@@ -30,7 +30,9 @@ function EmailStep({
 
   const email = useWatch({ control, name: "email" });
 
-  const [emailCooldowns, setEmailCooldowns] = useState<Record<string, number | undefined>>({});
+  const [emailCooldowns, setEmailCooldowns] = useState<
+    Record<string, number | undefined>
+  >({});
 
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
@@ -43,7 +45,9 @@ function EmailStep({
       goToNextStep();
     },
     onError: (error: unknown) => {
-      const axiosError = error as { response?: { data?: { error?: string; retryAfterSeconds?: number } } };
+      const axiosError = error as {
+        response?: { data?: { error?: string; retryAfterSeconds?: number } };
+      };
       const data = axiosError?.response?.data;
 
       let errorMessage = "Failed to send verification code. Try again.";
@@ -58,11 +62,15 @@ function EmailStep({
           }
           return;
         } else if (errorType === "RESEND_ATTEMPTS_EXCEEDED") {
-          errorMessage = "Maximum resend attempts exceeded. Retry after some time";
+          errorMessage =
+            "Maximum resend attempts exceeded. Retry after some time";
         } else if (errorType === "USER_ALREADY_EXISTS") {
           errorMessage = "Email already registered please login.";
         }
-      } else if ((error as { code?: string }).code === "ERR_NETWORK" || (error as { message?: string }).message === "Network Error") {
+      } else if (
+        (error as { code?: string }).code === "ERR_NETWORK" ||
+        (error as { message?: string }).message === "Network Error"
+      ) {
         errorMessage = "Network error. Check your connection and try again.";
       }
 
@@ -84,6 +92,7 @@ function EmailStep({
   const cooldown: number = emailCooldowns[email] ?? 0;
   const isCoolDownActive: boolean = cooldown > 0;
 
+  // decrement per email resend retryAfterSeconds
   useEffect(() => {
     const interval = setInterval(() => {
       setEmailCooldowns((prev) => {
