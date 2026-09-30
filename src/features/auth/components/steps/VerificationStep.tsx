@@ -4,8 +4,6 @@ import type { SignUpFormData } from "../../validation/signup.schema";
 import {
   useRef,
   useState,
-  useEffect,
-  useCallback,
   type ClipboardEvent,
 } from "react";
 import {
@@ -55,10 +53,12 @@ function VerificationStep({
         setError("verificationCode", { message: "Invalid verification code." });
       }
     },
-    onError: (error) => {
-      const errorData = error.response.data;
+    onError: (error: unknown) => {
+      const errorData = (
+        error as { response?: { data?: { error?: string } } }
+      ).response?.data;
 
-      const errorType = errorData.error;
+      const errorType = errorData?.error;
 
       let errorMessage = "Verification failed. Try again.";
 

@@ -69,7 +69,7 @@ describe("useCooldown", () => {
   it("does not reset from null prop", () => {
     const { result, rerender } = renderHook(
       ({ seconds }: { seconds: number | null }) => useCooldown(seconds),
-      { initialProps: { seconds: 5 } },
+      { initialProps: { seconds: 5 as number | null } },
     );
 
     rerender({ seconds: null });

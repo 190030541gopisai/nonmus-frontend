@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function useSignUpMultiStepForm(steps) {
+type Step = {
+  id: string;
+  next: string | null;
+  previous: string | null;
+};
+
+function useSignUpMultiStepForm(steps: readonly Step[]) {
   const [currentStep, setCurrentStep] = useState(0);
 
   let current = steps[currentStep];

@@ -53,7 +53,6 @@ function SignUpPage() {
           goToNextStep={goToNextStep}
           verificationTimings={verificationTimings}
           setVerificationTimings={handleSetVerificationTimings}
-          goToStep={goToStep}
           sessionExpired={sessionExpired}
           onSessionExpired={handleSessionExpired}
         />

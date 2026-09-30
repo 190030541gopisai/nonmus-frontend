@@ -41,9 +41,9 @@ const mocks = vi.hoisted(() => {
     useMultiStep: vi.fn(() => ({
       currentStep: 0,
       isFirstStep: true,
-      goToNextStep,
-      goToPreviousStep,
-      goToStep,
+      goToNextStep: mocks.goToNextStep,
+      goToPreviousStep: mocks.goToPreviousStep,
+      goToStep: mocks.goToStep,
     })),
   };
 });

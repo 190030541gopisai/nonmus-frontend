@@ -30,9 +30,9 @@ function EmailStep({
 
   const email = useWatch({ control, name: "email" });
 
-  const [emailCooldowns, setEmailCooldowns] = useState<
-    Record<string, number | undefined>
-  >({});
+  const [emailCooldowns, setEmailCooldowns] = useState<Record<string, number>>(
+    {},
+  );
 
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
@@ -54,10 +54,11 @@ function EmailStep({
       if (data) {
         const errorType = data.error;
         if (errorType === "RESEND_COOLDOWN_ACTIVE") {
-          if (data.retryAfterSeconds) {
-            setEmailCooldowns((prev: Record<string, number>) => ({
+          const retryAfterSeconds = data.retryAfterSeconds;
+          if (retryAfterSeconds) {
+            setEmailCooldowns((prev) => ({
               ...prev,
-              [email]: data.retryAfterSeconds,
+              [email]: retryAfterSeconds,
             }));
           }
           return;
@@ -98,7 +99,7 @@ function EmailStep({
       setEmailCooldowns((prev) => {
         const next = { ...prev };
 
-        Object.entries(next).forEach(([key, seconds]: [string, number]) => {
+        Object.entries(next).forEach(([key, seconds]) => {
           if (seconds <= 1) {
             delete next[key];
           } else {
