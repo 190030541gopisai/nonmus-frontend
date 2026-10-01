@@ -20,6 +20,10 @@ function SignUpLayout({
           <BiArrowBack onClick={goToPreviousStep} className="h-6 w-6" />
         )}
 
+        <div>
+          <img src="logo.png" />
+        </div>
+
         <div className="w-full">{children}</div>
 
         <div className="w-full space-y-4">

@@ -55,6 +55,9 @@ function LoginPage() {
     <div className="h-screen">
       <div className="p-8 space-y-4 h-full max-w-sm mx-auto">
         <div className="w-full">
+          <div>
+            <img src="logo.png" />
+          </div>
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
               <label
