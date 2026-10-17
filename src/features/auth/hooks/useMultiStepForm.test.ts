@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import useSignUpMultiStepForm from "./useSignUpMultiStepForm";
+import useMultiStepForm from "./useMultiStepForm";
 
 type Step = {
   id: string;
@@ -14,9 +14,9 @@ const steps: Step[] = [
   { id: "third", next: null, previous: "second" },
 ];
 
-describe("useSignUpMultiStepForm", () => {
+describe("useMultiStepForm", () => {
   it("starts at the first step", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     expect(result.current.currentStep).toBe(0);
     expect(result.current.isFirstStep).toBe(true);
@@ -24,7 +24,7 @@ describe("useSignUpMultiStepForm", () => {
   });
 
   it("moves to next and previous steps", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     act(() => result.current.goToNextStep());
     expect(result.current.currentStep).toBe(1);
@@ -36,7 +36,7 @@ describe("useSignUpMultiStepForm", () => {
   });
 
   it("does not move before first step", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     act(() => result.current.goToPreviousStep());
 
@@ -44,7 +44,7 @@ describe("useSignUpMultiStepForm", () => {
   });
 
   it("does not move after last step", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     act(() => result.current.goToStep("third"));
     expect(result.current.isLastStep).toBe(true);
@@ -55,7 +55,7 @@ describe("useSignUpMultiStepForm", () => {
   });
 
   it("moves directly to a step by id", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     act(() => result.current.goToStep("third"));
 
@@ -64,7 +64,7 @@ describe("useSignUpMultiStepForm", () => {
   });
 
   it("ignores unknown step ids", () => {
-    const { result } = renderHook(() => useSignUpMultiStepForm(steps));
+    const { result } = renderHook(() => useMultiStepForm(steps));
 
     act(() => result.current.goToStep("missing"));
 
@@ -77,7 +77,7 @@ describe("useSignUpMultiStepForm", () => {
       { id: "second", next: null, previous: "missing" },
     ];
     const { result } = renderHook(() =>
-      useSignUpMultiStepForm(stepsWithMissingLinks),
+      useMultiStepForm(stepsWithMissingLinks),
     );
 
     act(() => result.current.goToNextStep());

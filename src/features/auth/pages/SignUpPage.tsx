@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { signUpSteps } from "../config/signUpSteps";
-import useSignUpMultiStepForm from "../hooks/useSignUpMultiStepForm";
+import useMultiStepForm from "../hooks/useMultiStepForm";
 import SignUpLayout from "../layouts/SignupLayout";
 import type { SignUpFormData } from "../validation/signup.schema";
 import { SignUpSchema } from "../validation/signup.schema";
@@ -10,7 +10,7 @@ import type { VerificationCodeResult } from "../api/authApi";
 
 function SignUpPage() {
   const { currentStep, isFirstStep, goToNextStep, goToPreviousStep, goToStep } =
-    useSignUpMultiStepForm(signUpSteps);
+    useMultiStepForm(signUpSteps);
   const methods = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {

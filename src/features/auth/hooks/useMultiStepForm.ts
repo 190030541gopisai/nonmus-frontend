@@ -6,7 +6,7 @@ type Step = {
   previous: string | null;
 };
 
-function useSignUpMultiStepForm(steps: readonly Step[]) {
+function useMultiStepForm(steps: readonly Step[]) {
   const [currentStep, setCurrentStep] = useState(0);
 
   let current = steps[currentStep];
@@ -54,4 +54,4 @@ function useSignUpMultiStepForm(steps: readonly Step[]) {
   };
 }
 
-export default useSignUpMultiStepForm;
+export default useMultiStepForm;

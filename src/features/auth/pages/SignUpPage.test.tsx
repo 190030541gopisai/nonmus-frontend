@@ -59,7 +59,7 @@ vi.mock("../config/signUpSteps", () => ({
   ],
 }));
 
-vi.mock("../hooks/useSignUpMultiStepForm", () => ({
+vi.mock("../hooks/useMultiStepForm", () => ({
   default: mocks.useMultiStep,
 }));
 
