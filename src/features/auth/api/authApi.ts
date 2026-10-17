@@ -65,3 +65,44 @@ export const login = async (payload: LoginPayload): Promise<LoginResult> => {
   const response = await apiClient.post(`${AUTH_PREFIX}/login`, payload);
   return response.data;
 };
+
+// Forgot password
+export const forgotPasswordSendCode = async (
+  email: string,
+): Promise<VerificationCodeResult> => {
+  const response = await apiClient.post(
+    `${AUTH_PREFIX}/forgot-password/send-code`,
+    { email },
+  );
+  return response.data;
+};
+
+export const forgotPasswordVerifyCode = async (
+  email: string,
+  code: string,
+): Promise<VerifyCodeResult> => {
+  const response = await apiClient.post(
+    `${AUTH_PREFIX}/forgot-password/verify-code`,
+    { email, code },
+  );
+  return response.data;
+};
+
+export interface ResetPasswordPayload {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface ResetPasswordResult {
+  message: string;
+}
+
+export const resetPassword = async (
+  payload: ResetPasswordPayload,
+): Promise<ResetPasswordResult> => {
+  const response = await apiClient.post(
+    `${AUTH_PREFIX}/forgot-password/reset`,
+    payload,
+  );
+  return response.data;
+};
