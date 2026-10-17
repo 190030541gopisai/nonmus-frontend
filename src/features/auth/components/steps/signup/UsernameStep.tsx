@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import type { SignUpFormData } from "../../validation/signup.schema";
-import { checkUsernameAvailability } from "../../api/userApi";
+import type { SignUpFormData } from "../../../validation/signup.schema";
+import { checkUsernameAvailability } from "../../../api/userApi";
 
 interface UsernameStepProps {
   goToNextStep: () => void;

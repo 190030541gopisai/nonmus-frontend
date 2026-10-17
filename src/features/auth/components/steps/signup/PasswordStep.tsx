@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import type { SignUpFormData } from "../../validation/signup.schema";
-import PasswordRule from "../PasswordRule";
-import { signUp } from "../../api/authApi";
+import type { SignUpFormData } from "../../../validation/signup.schema";
+import PasswordRule from "../../PasswordRule";
+import { signUp } from "../../../api/authApi";
 
 interface PasswordStepProps {
   goToNextStep: () => void;

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import type { SignUpFormData } from "../../validation/signup.schema";
+import type { SignUpFormData } from "../../../validation/signup.schema";
 import {
   useRef,
   useState,
@@ -10,9 +10,9 @@ import {
   verifyCode,
   sendVerificationCode,
   type VerificationCodeResult,
-} from "../../api/authApi";
-import useCountdown from "../../hooks/useCooldown";
-import { formatSeconds } from "../../util/TimeUtils";
+} from "../../../api/authApi";
+import useCountdown from "../../../hooks/useCooldown";
+import { formatSeconds } from "../../../util/TimeUtils";
 
 const MAX_OTP_LEN = 6;
 

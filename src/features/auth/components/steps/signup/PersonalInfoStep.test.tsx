@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "../../validation/signup.schema";
+} from "../../../validation/signup.schema";
 
 function renderPersonalInfoStep(props = {}) {
   function Wrapper() {

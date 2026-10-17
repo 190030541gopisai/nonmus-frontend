@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import type { SignUpFormData } from "../../validation/signup.schema";
+import type { SignUpFormData } from "../../../validation/signup.schema";
 
 interface PersonalInfoProps {
   goToNextStep: () => void;

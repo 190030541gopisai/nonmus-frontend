@@ -7,10 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "../../validation/signup.schema";
-import { checkUsernameAvailability } from "../../api/userApi";
+} from "../../../validation/signup.schema";
+import { checkUsernameAvailability } from "../../../api/userApi";
 
-vi.mock("../../api/userApi", () => ({
+vi.mock("../../../api/userApi", () => ({
   checkUsernameAvailability: vi.fn(),
 }));
 

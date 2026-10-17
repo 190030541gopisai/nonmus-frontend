@@ -1,12 +1,12 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import type { SignUpFormData } from "../../validation/signup.schema";
+import type { SignUpFormData } from "../../../validation/signup.schema";
 import { useEffect, useState } from "react";
 import {
   sendVerificationCode,
   type VerificationCodeResult,
-} from "../../api/authApi";
-import { formatSeconds } from "../../util/TimeUtils";
+} from "../../../api/authApi";
+import { formatSeconds } from "../../../util/TimeUtils";
 
 interface EmailStepProps {
   goToNextStep: () => void;
@@ -94,6 +94,7 @@ function EmailStep({
   const isCoolDownActive: boolean = cooldown > 0;
 
   // decrement per email resend retryAfterSeconds
+  // Decrement per-email resend cooldown every second so the button re-enables automatically
   useEffect(() => {
     const interval = setInterval(() => {
       setEmailCooldowns((prev) => {

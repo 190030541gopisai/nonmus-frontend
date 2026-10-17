@@ -8,10 +8,10 @@ import VerificationStep from "./VerificationStep";
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "../../validation/signup.schema";
-import { sendVerificationCode, verifyCode } from "../../api/authApi";
+} from "../../../validation/signup.schema";
+import { sendVerificationCode, verifyCode } from "../../../api/authApi";
 
-vi.mock("../../api/authApi", () => ({
+vi.mock("../../../api/authApi", () => ({
   sendVerificationCode: vi.fn(),
   verifyCode: vi.fn(),
 }));

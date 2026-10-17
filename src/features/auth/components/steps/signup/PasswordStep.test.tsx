@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "../../validation/signup.schema";
+} from "../../../validation/signup.schema";
 import userEvent from "@testing-library/user-event";
-import { signUp } from "../../api/authApi";
+import { signUp } from "../../../api/authApi";
 
 const mockNavigate = vi.fn();
 
-vi.mock("../../api/authApi", () => ({
+vi.mock("../../../api/authApi", () => ({
   signUp: vi.fn(),
 }));
 

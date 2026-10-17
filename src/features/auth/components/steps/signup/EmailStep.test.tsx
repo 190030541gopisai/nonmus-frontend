@@ -9,10 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "../../validation/signup.schema";
-import { sendVerificationCode } from "../../api/authApi";
+} from "../../../validation/signup.schema";
+import { sendVerificationCode } from "../../../api/authApi";
 
-vi.mock("../../api/authApi", () => ({
+vi.mock("../../../api/authApi", () => ({
   sendVerificationCode: vi.fn(),
 }));
 
