@@ -56,6 +56,27 @@ describe("Axios response interceptor", () => {
     expect(response.data).toEqual(responseData);
   });
 
+  it("does not attempt refresh for login 401 — rejects immediately", async () => {
+    let refreshCount = 0;
+
+    server.use(
+      http.post(`${BASE_URL}/v1/auth/login`, () =>
+        HttpResponse.json({ message: "Invalid credentials" }, { status: 401 }),
+      ),
+
+      http.get(`${BASE_URL}/v1/auth/refresh`, () => {
+        refreshCount++;
+        return HttpResponse.json(null, { status: 200 });
+      }),
+    );
+
+    await expect(
+      apiClient.post("/v1/auth/login", { credential: "a", password: "b" }),
+    ).rejects.toMatchObject({ response: { status: 401 } });
+
+    expect(refreshCount).toBe(0);
+  });
+
   it("rejects the original request when refresh fails", async () => {
     let refreshCount = 0;
 
