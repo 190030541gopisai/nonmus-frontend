@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { signUpSteps } from "./signUpSteps";
-import EmailStep from "../components/steps/EmailStep";
-import PasswordStep from "../components/steps/PasswordStep";
-import PersonalInfoStep from "../components/steps/PersonalInfoStep";
-import UsernameStep from "../components/steps/UsernameStep";
-import VerificationStep from "../components/steps/VerificationStep";
+import EmailStep from "../components/steps/signup/EmailStep";
+import PasswordStep from "../components/steps/signup/PasswordStep";
+import PersonalInfoStep from "../components/steps/signup/PersonalInfoStep";
+import UsernameStep from "../components/steps/signup/UsernameStep";
+import VerificationStep from "../components/steps/signup/VerificationStep";
 
 describe("signUpSteps", () => {
   it("contains signup steps in the expected order", () => {
