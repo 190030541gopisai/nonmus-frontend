@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/authApi";
 import { LoginSchema, type LoginFormData } from "../validation/login.schema";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 function LoginPage() {
@@ -18,7 +18,7 @@ function LoginPage() {
       credential: "",
       password: "",
     },
-    mode: "onSubmit",
+    mode: "onSubmit"
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -102,6 +102,14 @@ function LoginPage() {
                   {errors.password.message}
                 </p>
               )}
+            </div>
+            <div>
+              <Link
+                to="/forgot-password"
+                className="font-medium text-blue-600 hover:text-blue-700"
+              >
+                Forgot password?
+              </Link>
             </div>
             <button
               type="submit"

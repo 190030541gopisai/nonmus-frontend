@@ -106,6 +106,37 @@ describe("LoginPage", () => {
     expect(screen.getByRole("button", { name: "Login" })).toBeEnabled();
   });
 
+  it("retains credential and password values after a failed login", async () => {
+    mockLogin.mockRejectedValue({
+      response: { data: { message: "Invalid credentials" } },
+    });
+    renderLoginPage();
+
+    await userEvent.type(screen.getByLabelText(/email \/ username/i), "ada");
+    await userEvent.type(screen.getByLabelText(/^password/i), "secret");
+    await userEvent.click(screen.getByRole("button", { name: "Login" }));
+
+    await screen.findByText("Invalid credentials");
+
+    expect(screen.getByLabelText(/email \/ username/i)).toHaveValue("ada");
+    expect(screen.getByLabelText(/^password/i)).toHaveValue("secret");
+  });
+
+  it("resets isSubmitting to false after a failed login", async () => {
+    mockLogin.mockRejectedValue({
+      response: { data: { message: "Invalid credentials" } },
+    });
+    renderLoginPage();
+
+    await userEvent.type(screen.getByLabelText(/email \/ username/i), "ada");
+    await userEvent.type(screen.getByLabelText(/^password/i), "secret");
+    await userEvent.click(screen.getByRole("button", { name: "Login" }));
+
+    await screen.findByText("Invalid credentials");
+
+    expect(screen.getByRole("button", { name: "Login" })).toBeEnabled();
+  });
+
   it("shows fallback message on unknown login failure", async () => {
     mockLogin.mockRejectedValue(new Error("Network failure"));
     renderLoginPage();
